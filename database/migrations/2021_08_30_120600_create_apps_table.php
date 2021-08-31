@@ -18,7 +18,10 @@ class CreateAppsTable extends Migration
 
             $table->string("name")->charset('utf8mb4 COLLATE utf8mb4_bin')->unique();
             $table->string("code")->charset('utf8mb4 COLLATE utf8mb4_bin')->unique();//String eg. Writers Admin Employers represented with code we prefix so that payments with eg. we-197 csn be idntified. Please
+            $table->string("endpoint");
+            $table->string("validation_url")->nullable();
             $table->text("description")->nullable();
+            $table->text("logo")->nullable();//Url
 
             $table->timestamps();
         });
