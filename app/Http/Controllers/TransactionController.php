@@ -16,6 +16,16 @@ class TransactionController extends Controller
     {
         //
     }
+    public function c2b_confirmation(Request $request)
+    {
+        $data = $request->all();
+        file_put_contents("test.json", json_encode($data));
+        return response()->json([
+            "message" => "success"
+        ], 200);
+        // dd($data);
+    }
+
 
     /**
      * Show the form for creating a new resource.

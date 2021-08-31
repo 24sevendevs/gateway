@@ -24,7 +24,7 @@
                                                 class="counter">{{App\Models\App::count()}}</span></h4>
                                     </div>
                                     <div class="ecommerce-box light-bg-primary"><i style="font-size: 25px"
-                                            class="fa fa-users" aria-hidden="true"></i></div>
+                                            class="fa fa-briefcase" aria-hidden="true"></i></div>
                                 </div>
                             </a>
                         </div>

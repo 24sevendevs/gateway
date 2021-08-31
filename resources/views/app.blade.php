@@ -127,8 +127,6 @@
                                 src="{{ asset('assets/images/logo/logo.png') }}" alt=""><img class="img-fluid for-dark"
                                 src="{{ asset('assets/images/logo/logo.png') }}" alt=""></a>
                         <div class="back-btn"><i class="fa fa-angle-left"></i></div>
-                        <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid">
-                            </i></div>
                     </div>
                     <div class="logo-icon-wrapper"><a href="/"><img class="img-fluid"
                                 src="{{ asset('assets/images/logo/logo-icon.png') }}" alt=""></a></div>
@@ -165,7 +163,7 @@
                                 </li>
                                 <li class="sidebar-list">
                                     <a class="sidebar-link sidebar-title link-nav {{explode('.', Route::currentRouteName())[0] === 'apps' ? 'active-tab' : ''}}"
-                                        href="{{route('apps.index')}}"><i class="fa fa-users my-icon"> </i>
+                                        href="{{route('apps.index')}}"><i class="fa fa-briefcase my-icon"> </i>
                                         Apps</a>
                                 </li>
                             </ul>
@@ -177,16 +175,17 @@
             <!-- Page Sidebar Ends-->
             @yield('content')
             <!-- footer start-->
-            <footer class="footer">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12 footer-copyright text-center">
-                            <p class="mb-0">Copyright 2021 © 24Seven Developers Payment Gateway</p>
-                        </div>
+
+        </div>
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 footer-copyright text-center">
+                        <p class="mb-0">Copyright 2021 © 24Seven Developers Payment Gateway</p>
                     </div>
                 </div>
-            </footer>
-        </div>
+            </div>
+        </footer>
     </div> <!-- latest jquery-->
     <script src="{{ asset('assets/js/jquery-3.5.1.min.js') }}"></script>
     <!-- Bootstrap js-->
