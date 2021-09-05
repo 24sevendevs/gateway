@@ -14,12 +14,19 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        $transactions = Transaction::latest()->paginate(50);
+        return view("transactions.index", compact('transactions'));
     }
     public function c2b_confirmation(Request $request)
     {
         $data = $request->all();
-        file_put_contents("test.json", json_encode($data));
+        Transaction::create([
+            "app_id" => 1,
+            "content" => json_encode($data),
+            "TransID" => "Test",
+            "MSISDN" => "Test",
+            "TransAmount" => 0,
+        ]);
         return response()->json([
             "message" => "success"
         ], 200);

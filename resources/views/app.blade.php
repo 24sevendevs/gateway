@@ -26,8 +26,15 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/flag-icon.css') }}">
     <!-- Feather icon-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/feather-icon.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/scrollbar.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/animate.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/chartist.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/date-picker.css') }}">
+
+
     @yield('styles')
     <!-- Bootstrap css-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/custom.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/bootstrap.css') }}">
     <!-- App css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
@@ -36,7 +43,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/responsive.css') }}">
 </head>
 
-<body onload="startTime()">
+<body>
     <div class="loader-wrapper">
         <div class="loader-index"><span></span></div>
         <svg>
@@ -117,7 +124,7 @@
                 </script>
             </div>
         </div>
-        <!-- Page Header Ends                              -->
+        <!-- Page Header Ends -->
         <!-- Page Body Start-->
         <div class="page-body-wrapper">
             <!-- Page Sidebar Start-->
@@ -166,6 +173,11 @@
                                         href="{{route('apps.index')}}"><i class="fa fa-briefcase my-icon"> </i>
                                         Apps</a>
                                 </li>
+                                <li class="sidebar-list">
+                                    <a class="sidebar-link sidebar-title link-nav {{explode('.', Route::currentRouteName())[0] === 'transactions' ? 'active-tab' : ''}}"
+                                        href="{{route('transactions.index')}}"><i class="fa fa-usd my-icon"> </i>
+                                        Transactions</a>
+                                </li>
                             </ul>
                         </div>
                         <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
@@ -199,7 +211,11 @@
     <!-- scrollbar js-->
     <script src="{{ asset('assets/js/scrollbar/simplebar.js') }}"></script>
     <script src="{{ asset('assets/js/scrollbar/custom.js') }}"></script>
+    <script src="{{ asset('assets/js/sidebar-menu.js') }}"></script>
     @yield('scripts')
+    {{-- <script src="{{ asset('assets/js/dashboard/default.js') }}"></script> --}}
+    <script src="{{ asset('assets/js/notify/bootstrap-notify.min.js') }}"></script>
+    <script src="{{ asset('assets/js/notify/index.js') }}"></script>
     <script src="{{ asset('assets/js/confirm.js') }}"></script>
     <!-- Theme js-->
     <script src="{{ asset('assets/js/script.js') }}"></script>

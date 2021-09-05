@@ -14,7 +14,8 @@ class AppController extends Controller
      */
     public function index()
     {
-        //
+        $apps = App::all();
+        return view("apps.index", compact('apps'));
     }
 
     /**

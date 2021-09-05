@@ -69,10 +69,11 @@ $(document).ready(function () {
     });
     // Advance data table
     var table = $('#advance-1').DataTable();
-    $('#advance-1 tbody').on('click', 'tr', function () {
-        var data = table.row(this).data();
-        alert('You clicked on ' + data[0] + '\'s row');
-    });
+    // $('#advance-1 tbody').on('click', 'tr', function () {
+    //     var data = table.row(this).data();
+    //     console.log(`This is data : ${data}`);
+    //     alert('You clicked on ' + data[0] + '\'s row');
+    // });
     var eventFired = function (type) {
         var n = $('#demo_info')[0];
         n.innerHTML += '<div class="me-2"><b>' + type + ' event - </b>' + new Date().getTime() + '</div>';

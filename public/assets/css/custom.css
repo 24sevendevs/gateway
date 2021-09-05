@@ -1,0 +1,26 @@
+.circular-avatar {
+    vertical-align: middle;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.media-body{
+    overflow-wrap: break-word;
+}
+
+.minimize{
+    line-height: 12px;
+    font-size: 12px;
+}
+.minimize .card-body{
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+}
+.minimize hr{
+    margin: 1px !important;
+}
+
+.theme-color{
+    color: var(--theme-deafult)
+}
