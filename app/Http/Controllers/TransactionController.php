@@ -32,6 +32,21 @@ class TransactionController extends Controller
         ], 200);
         // dd($data);
     }
+    public function c2b_validation(Request $request)
+    {
+        $data = $request->all();
+        Transaction::create([
+            "app_id" => 1,
+            "content" => json_encode($data),
+            "TransID" => "c2b_validation",
+            "MSISDN" => "Test",
+            "TransAmount" => 0,
+        ]);
+        return response()->json([
+            "message" => "success"
+        ], 200);
+        // dd($data);
+    }
 
 
     /**
