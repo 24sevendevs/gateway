@@ -39,7 +39,7 @@ class TransactionController extends Controller
             "app_id" => 1,
             "content" => json_encode($data),
             "TransID" => "c2b_validation",
-            "MSISDN" => "Test",
+            "MSISDN" => "c2b_validation",
             "TransAmount" => 0,
         ]);
         return response()->json([
