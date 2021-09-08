@@ -29,6 +29,7 @@ class CreateTransactionsTable extends Migration
             $table->string("ThirdPartyTransID")->nullable();
             $table->string("MSISDN");//phone
             $table->float("TransAmount");//amount
+            $table->boolean("processed")->default(false);//Marked true upon a succesful response
 
             $table->timestamps();
         });
