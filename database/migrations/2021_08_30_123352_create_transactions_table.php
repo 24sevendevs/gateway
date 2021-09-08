@@ -18,10 +18,10 @@ class CreateTransactionsTable extends Migration
 
             $table->integer("app_id")->nullable();
             $table->string("TransactionType")->nullable();
-            $table->string("TransID");
+            $table->string("TransID")->unique();
             $table->string("TransTime")->nullable();
             $table->string("BusinessShortCode")->nullable();
-            $table->string("BillRefNumber")->unique();
+            $table->string("BillRefNumber");//Account Number
             $table->string("FirstName")->nullable();
             $table->string("MiddleName")->nullable();
             $table->string("LastName")->nullable();
