@@ -22,21 +22,20 @@ class TransactionController extends Controller
     public function c2b_confirmation(Request $request)
     {
         // WhiteList Safaricom's IPs
-        // $ips = ["196.201.214.200", "196.201.214.206", "196.201.213.114", "196.201.214.207", "196.201.214.208", "196.201.213.44", "196.201.212.127", "196.201.212.128", "196.201.212.129", "196.201.212.132", "196.201.212.136", "196.201.212.138", "196.201.212.69", "196.201.212.74"];
-        // $current_ip = $request->ip();
-        // if(!in_array($current_ip, $ips)){
-        //     return response()->json([
-        //         "message" => "IP not whitelisted as Safaricom IP."
-        //     ], 403);
-        // }
-        // PI87MDVMYZ
+        $ips = ["196.201.214.200", "196.201.214.206", "196.201.213.114", "196.201.214.207", "196.201.214.208", "196.201.213.44", "196.201.212.127", "196.201.212.128", "196.201.212.129", "196.201.212.132", "196.201.212.136", "196.201.212.138", "196.201.212.69", "196.201.212.74"];
+        $current_ip = $request->ip();
+        if(!in_array($current_ip, $ips)){
+            return response()->json([
+                "message" => "IP not whitelisted as Safaricom IP."
+            ], 403);
+        }
 
-        $request_data = '{"TransactionType":"Pay Bill","TransID":"PI87MDVMYY","TransTime":"20210908072557","TransAmount":"1.00","BusinessShortCode":"4020109","BillRefNumber":"ww-6","InvoiceNumber":null,"OrgAccountBalance":"57568.00","ThirdPartyTransID":null,"MSISDN":"254723077827","FirstName":"KELVIN","MiddleName":"THIONG\'O","LastName":"MAINA"}';
-        $data = json_decode($request_data);
+        // $request_data = '{"TransactionType":"Pay Bill","TransID":"PI87MDVMYZ","TransTime":"20210908072557","TransAmount":"1.00","BusinessShortCode":"4020109","BillRefNumber":"we-6","InvoiceNumber":null,"OrgAccountBalance":"57568.00","ThirdPartyTransID":null,"MSISDN":"254723077827","FirstName":"KELVIN","MiddleName":"THIONG\'O","LastName":"MAINA"}';
+        // $data = json_decode($request_data);
         // dd($data);
-        // $data = $request->all();
-        // $data = json_encode($data);
-        // $data = json_decode($data);
+        $data = $request->all();
+        $data = json_encode($data);
+        $data = json_decode($data);
         $accountNumberArray = explode('-', $data->BillRefNumber);
         $code = strtolower($accountNumberArray[0]);
         $app = App::where("code", $code)->first();
@@ -68,17 +67,16 @@ class TransactionController extends Controller
         ]);
 
         if ($app) {
-
             $tokenResponse = Http::retry(3, 100)->post($app->login_endpoint, [
                 'username' => $app->username,
                 'password' => $app->password,
             ])->json();
-            dd($tokenResponse);
             if ($tokenResponse) {
                 $token = $tokenResponse['access_token'];
                 $headers = [
                     'Authorization' => 'Bearer ' . $token,
                     'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
                 ];
                 $response = Http::retry(3, 100)->withHeaders($headers)->post($app->endpoint, $request->all())->json();
 
