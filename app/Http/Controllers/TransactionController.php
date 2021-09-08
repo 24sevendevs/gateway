@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\App;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -19,13 +20,41 @@ class TransactionController extends Controller
     }
     public function c2b_confirmation(Request $request)
     {
+        // $data = '{"TransactionType":"Pay Bill","TransID":"PI87MDVMYZ","TransTime":"20210908072557","TransAmount":"1.00","BusinessShortCode":"4020109","BillRefNumber":"Test10","InvoiceNumber":null,"OrgAccountBalance":"57568.00","ThirdPartyTransID":null,"MSISDN":"254723077827","FirstName":"KELVIN","MiddleName":"THIONG\'O","LastName":"MAINA"}';
+        // $data = json_decode($data);
+        // dd($data);
         $data = $request->all();
+        $data = json_encode($data);
+        $data = json_decode($data);
+        $accountNumberArray = explode('-', $data->BillRefNumber);
+        $code = strtolower($accountNumberArray[0]);
+        $app = App::where("code", $code)->first();
+        $app_id = null;
+        if (!$app) {
+            $accountNumberArray = explode('_', $data->BillRefNumber);
+            $code = strtolower($accountNumberArray[0]);
+            $app = App::where("code", $code)->first();
+            if($app){
+                $app_id = $app->id;
+            }
+        }
+        else{
+            $app_id = $app->id;
+        }
+
         Transaction::create([
-            "app_id" => 1,
-            "content" => json_encode($data),
-            "TransID" => "Test",
-            "MSISDN" => "Test",
-            "TransAmount" => 0,
+            "app_id" => $app_id,
+            "TransID" => $data->TransID,
+            "MSISDN" => $data->MSISDN,
+            "TransAmount" => $data->TransAmount,
+            "TransactionType" => $data->TransactionType,
+            "BusinessShortCode" => $data->BusinessShortCode,
+            "BillRefNumber" => $data->BillRefNumber,
+            "OrgAccountBalance" => $data->OrgAccountBalance,
+            "ThirdPartyTransID" => $data->ThirdPartyTransID,
+            "FirstName" => $data->FirstName,
+            "MiddleName" => $data->MiddleName,
+            "LastName" => $data->LastName,
         ]);
         return response()->json([
             "message" => "success"
@@ -37,7 +66,6 @@ class TransactionController extends Controller
         $data = $request->all();
         Transaction::create([
             "app_id" => 1,
-            "content" => json_encode($data),
             "TransID" => "c2b_validation",
             "MSISDN" => "c2b_validation",
             "TransAmount" => 0,

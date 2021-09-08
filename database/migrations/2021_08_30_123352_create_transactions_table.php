@@ -16,11 +16,12 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
 
+            $table->integer("app_id")->nullable();
             $table->string("TransactionType")->nullable();
             $table->string("TransID");
             $table->string("TransTime")->nullable();
             $table->string("BusinessShortCode")->nullable();
-            $table->string("BillRefNumber")->nullable();
+            $table->string("BillRefNumber")->unique();
             $table->string("FirstName")->nullable();
             $table->string("MiddleName")->nullable();
             $table->string("LastName")->nullable();

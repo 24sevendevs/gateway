@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 // https://gateway.24seven.co.ke/api/payments/c2b-confirmation
-Route::post('/payments/c2b-confirmation', [App\Http\Controllers\TransactionController::class, 'c2b_confirmation'])->name('c2b_confirmation');
-Route::post('/payments/c2b-validation', [App\Http\Controllers\TransactionController::class, 'c2b_validation'])->name('c2b_validation');
+Route::any('/payments/c2b-confirmation', [App\Http\Controllers\TransactionController::class, 'c2b_confirmation'])->name('c2b_confirmation');
+Route::any('/payments/c2b-validation', [App\Http\Controllers\TransactionController::class, 'c2b_validation'])->name('c2b_validation');
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
