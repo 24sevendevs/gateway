@@ -43,6 +43,8 @@
                                                 alt="Logo" class="circular-avatar"> --}}
                                                 {{ $transaction->app->name }}
                                             </a>
+                                            @else
+                                            {{ $transaction->BillRefNumber }}
                                             @endif
                                         </td>
                                         <td>{{ $transaction->MSISDN }}</td>
