@@ -81,13 +81,13 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/vendors/datatables.css">
 @endsection
 @section('scripts')
+<!-- Plugins JS start-->
+<script src="/assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
+<script src="/assets/js/datatable/datatables/datatable.custom.js"></script>
 <script>
     $('#advance-1').DataTable({
         "ordering": false
     });
 </script>
-<!-- Plugins JS start-->
-<script src="/assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
-<script src="/assets/js/datatable/datatables/datatable.custom.js"></script>
 <!-- Plugins JS Ends-->
 @endsection
