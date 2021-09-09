@@ -36,12 +36,13 @@ class TransactionController extends Controller
         $data = $request->all();
         $data = json_encode($data);
         $data = json_decode($data);
-        $accountNumberArray = explode('-', $data->BillRefNumber);
+        $accountNumber = preg_replace('/\s+/', '', $data->BillRefNumber);//remove white space
+        $accountNumberArray = explode('-', $accountNumber);
         $code = strtolower($accountNumberArray[0]);
         $app = App::where("code", $code)->first();
         $app_id = null;
         if (!$app) {
-            $accountNumberArray = explode('_', $data->BillRefNumber);
+            $accountNumberArray = explode('_', $accountNumber);
             $code = strtolower($accountNumberArray[0]);
             $app = App::where("code", $code)->first();
             if ($app) {
@@ -58,7 +59,7 @@ class TransactionController extends Controller
             "TransAmount" => $data->TransAmount,
             "TransactionType" => $data->TransactionType,
             "BusinessShortCode" => $data->BusinessShortCode,
-            "BillRefNumber" => $data->BillRefNumber,
+            "BillRefNumber" => $accountNumber,
             "OrgAccountBalance" => $data->OrgAccountBalance,
             "ThirdPartyTransID" => $data->ThirdPartyTransID,
             "FirstName" => $data->FirstName,

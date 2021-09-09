@@ -31,8 +31,8 @@ class AppsSeeder extends Seeder
                 "code" => "ww",
                 "endpoint" => "https://employer.writersadmin.com/api/payments/handle-c2b-gateway-result",
                 "login_endpoint" => "https://employer.writersadmin.com/api/bots/login",
-                "username" => "",
-                "password" => "",
+                "username" => "writers_bot",
+                "password" => "pM9CMPfrF5Z9oh7vDwjMlKqD",
                 "description" => "Writers Admin writers app has the 'w' representing 'writers'. Endpoint is https://employer.writersadmin.com/api/payments/handle-c2b-gateway-result.",
             ],
             [
