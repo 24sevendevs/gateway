@@ -39,8 +39,8 @@
                                         <td>
                                             @if ($transaction->app)
                                             <a href="{{route('apps.show', $transaction->app->id)}}">
-                                                <img src="{{ $transaction->app->logo? $transaction->app->logo: '/images/default-logo.png' }}"
-                                                    alt="Logo" class="circular-avatar">
+                                                {{-- <img src="{{ $transaction->app->logo? $transaction->app->logo: '/images/default-logo.png' }}"
+                                                alt="Logo" class="circular-avatar"> --}}
                                                 {{ $transaction->app->name }}
                                             </a>
                                             @endif
@@ -52,7 +52,7 @@
                                         </td>
                                         <td>{{ $transaction->TransAmount }}
                                         </td>
-                                        <td>{{ date('M d, Y g:i A', strtotime($transaction->created_at)) }}</td>
+                                        <td>{{ date('M d, Y g:i A', strtotime($transaction->created_at . "-3")) }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -79,6 +79,11 @@
 <link rel="stylesheet" type="text/css" href="/assets/css/vendors/datatables.css">
 @endsection
 @section('scripts')
+<script>
+    $('#advance-1').DataTable({
+        "ordering": false
+    });
+</script>
 <!-- Plugins JS start-->
 <script src="/assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
 <script src="/assets/js/datatable/datatables/datatable.custom.js"></script>
