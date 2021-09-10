@@ -128,6 +128,9 @@ class TransactionController extends Controller
                         $transaction->save();
                     }
                 }
+            } else {
+                $transaction->processed = true;
+                $transaction->save();
             }
         }
     }
