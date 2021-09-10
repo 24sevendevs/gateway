@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function(){
         return redirect()->route("home");
     });
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/complete-failed-transactions', [App\Http\Controllers\TransactionController::class, 'complete_failed_transactions']);
     Route::resource('apps', AppController::class);
     Route::resource('transactions', TransactionController::class);
 });
