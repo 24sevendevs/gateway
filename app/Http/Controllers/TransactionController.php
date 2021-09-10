@@ -99,7 +99,7 @@ class TransactionController extends Controller
 
     public function complete_failed_transactions()
     {
-        foreach (Transaction::where("processed" == false)->get() as $transaction) {
+        foreach (Transaction::where("processed", false)->get() as $transaction) {
             $accountNumber = preg_replace('/\s+/', '', $transaction->BillRefNumber); //remove white space
             $accountNumberArray = explode('-', $accountNumber);
             $code = strtolower($accountNumberArray[0]);
