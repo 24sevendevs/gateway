@@ -154,7 +154,7 @@ class TransactionController extends Controller
                 if ($row > 6 && $data[12] != "Schemes" && $data[12] != "") {
 
                     // added
-                    if (Transaction::where("BillRefNumber", $data[0])->count() > 0) {
+                    if (Transaction::where("TransID", $data[0])->count() > 0) {
                         continue;
                     }
 
