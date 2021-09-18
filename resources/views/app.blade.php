@@ -178,6 +178,11 @@
                                         href="{{route('transactions.index')}}"><i class="fa fa-usd my-icon"> </i>
                                         Transactions</a>
                                 </li>
+                                <li class="sidebar-list">
+                                    <a class="sidebar-link sidebar-title link-nav {{explode('.', Route::currentRouteName())[0] === 'admin' ? 'active-tab' : ''}}"
+                                        href="{{route('admin.show_check_deposits')}}"><i class="fa fa-usd my-icon"> </i>
+                                        Check Deposits</a>
+                                </li>
                             </ul>
                         </div>
                         <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>

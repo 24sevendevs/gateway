@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::middleware('auth')->group(function(){
+Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return redirect()->route("home");
     });
@@ -27,4 +27,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/complete-failed-transactions', [App\Http\Controllers\TransactionController::class, 'complete_failed_transactions']);
     Route::resource('apps', AppController::class);
     Route::resource('transactions', TransactionController::class);
+
+    Route::get('/check-deposit-transactions', [App\Http\Controllers\TransactionController::class, 'showCheckDeposit'])->name('admin.show_check_deposits');
+    Route::post('/check-deposit-transactions', [App\Http\Controllers\TransactionController::class, 'checkDeposit'])->name('admin.check_deposits');
 });
