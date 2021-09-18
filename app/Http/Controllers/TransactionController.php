@@ -174,6 +174,10 @@ class TransactionController extends Controller
                         $app_id = $app->id;
                     }
 
+                    if(!$app){
+                        continue;
+                    }
+
                     // End
 
                     $phoneString = $data[10];
