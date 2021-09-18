@@ -143,11 +143,15 @@ class TransactionController extends Controller
         } else {
             $csv = "csv/mpesa.csv";
         }
+
         if (($handle = fopen($csv, "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 if ($row == 4) {
                     $startDate = Carbon::createFromFormat('d-m-Y H:i:s', $data[2])->subHours(3);
                     $endDate = Carbon::createFromFormat('d-m-Y H:i:s', $data[4])->subHours(3);
+                }
+                if ($row == 2) {
+                    $businessShortCode = $data[1];
                 }
 
 
@@ -174,7 +178,7 @@ class TransactionController extends Controller
                         $app_id = $app->id;
                     }
 
-                    if(!$app){
+                    if (!$app) {
                         continue;
                     }
 
@@ -184,10 +188,12 @@ class TransactionController extends Controller
                     $arr = explode(' ', trim($phoneString));
                     $phoneNumber =  $this->mpesaFormatPhone($arr[0]);
                     $dataArr[] = [
+                        "app_id" => $app_id,
                         "receiptId" => $data[0],
                         "accountNumber" => $data[12],
                         "amount" => (int) $data[5],
                         "phoneNumber" => $phoneNumber,
+                        "businessShortCode" => $businessShortCode,
                     ];
                     $receipts[] = $data[0];
 
@@ -199,7 +205,45 @@ class TransactionController extends Controller
             fclose($handle);
         }
         // End of csv mining
-        dd($dataArr);
+        foreach ($dataArr as $data) {
+
+            $transaction = Transaction::create([
+                "app_id" => $data['app_id'],
+                "TransID" => $data['receiptId'],
+                "MSISDN" => $data['phoneNumber'], //phone
+                "TransAmount" => $data['amount'],
+                "BusinessShortCode" => $data['businessShortCode'],
+                "BillRefNumber" => $data['accountNumber'],
+            ]);
+
+            if ($app) {
+                $tokenResponse = Http::retry(3, 100)->post($app->login_endpoint, [
+                    'username' => $app->username,
+                    'password' => $app->password,
+                ])->json();
+                if ($tokenResponse) {
+                    $token = $tokenResponse['access_token'];
+                    $headers = [
+                        'Authorization' => 'Bearer ' . $token,
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json',
+                    ];
+                    $response = Http::retry(3, 100)->withHeaders($headers)->post($app->endpoint, json_decode(json_encode($transaction), true))->json();
+
+                    if ($response["success"] == true) {
+                        $transaction->processed = true;
+                        $transaction->save();
+                    }
+                }
+            } else {
+                $transaction->processed = true;
+                $transaction->save();
+            }
+
+            return response()->json([
+                "message" => "success"
+            ], 200);
+        }
     }
 
     public function complete_failed_transactions()
