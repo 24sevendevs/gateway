@@ -216,33 +216,7 @@ class TransactionController extends Controller
                 "BillRefNumber" => $data['accountNumber'],
             ]);
 
-            if ($app) {
-                $tokenResponse = Http::retry(3, 100)->post($app->login_endpoint, [
-                    'username' => $app->username,
-                    'password' => $app->password,
-                ])->json();
-                if ($tokenResponse) {
-                    $token = $tokenResponse['access_token'];
-                    $headers = [
-                        'Authorization' => 'Bearer ' . $token,
-                        'Content-Type' => 'application/json',
-                        'Accept' => 'application/json',
-                    ];
-                    $response = Http::retry(3, 100)->withHeaders($headers)->post($app->endpoint, json_decode(json_encode($transaction), true))->json();
-
-                    if ($response["success"] == true) {
-                        $transaction->processed = true;
-                        $transaction->save();
-                    }
-                }
-            } else {
-                $transaction->processed = true;
-                $transaction->save();
-            }
-
-            return response()->json([
-                "message" => "success"
-            ], 200);
+            dd($transaction);
         }
     }
 
