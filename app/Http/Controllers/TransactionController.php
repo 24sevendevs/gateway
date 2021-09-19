@@ -41,30 +41,14 @@ class TransactionController extends Controller
         $data = $request->all();
         $data = json_encode($data);
         $data = json_decode($data);
-        $accountNumber = preg_replace('/\s+/', '', $data->BillRefNumber); //remove white space
-        $accountNumberArray = explode('-', $accountNumber);
-        $code = strtolower($accountNumberArray[0]);
-        $app = App::where("code", $code)->first();
-        $app_id = null;
-        if (!$app) {
-            $accountNumberArray = explode('_', $accountNumber);
-            $code = strtolower($accountNumberArray[0]);
-            $app = App::where("code", $code)->first();
-            if ($app) {
-                $app_id = $app->id;
-            }
-        } else {
-            $app_id = $app->id;
-        }
 
         $transaction = Transaction::create([
-            "app_id" => $app_id,
             "TransID" => $data->TransID,
             "MSISDN" => $data->MSISDN, //phone
             "TransAmount" => $data->TransAmount,
             "TransactionType" => $data->TransactionType,
             "BusinessShortCode" => $data->BusinessShortCode,
-            "BillRefNumber" => $accountNumber,
+            "BillRefNumber" => $data->BillRefNumber,
             "OrgAccountBalance" => $data->OrgAccountBalance,
             "ThirdPartyTransID" => $data->ThirdPartyTransID,
             "FirstName" => $data->FirstName,
@@ -72,29 +56,7 @@ class TransactionController extends Controller
             "LastName" => $data->LastName,
         ]);
 
-        if ($app) {
-            $tokenResponse = Http::retry(3, 100)->post($app->login_endpoint, [
-                'username' => $app->username,
-                'password' => $app->password,
-            ])->json();
-            if ($tokenResponse) {
-                $token = $tokenResponse['access_token'];
-                $headers = [
-                    'Authorization' => 'Bearer ' . $token,
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
-                ];
-                $response = Http::retry(3, 100)->withHeaders($headers)->post($app->endpoint, $request->all())->json();
-
-                if ($response["success"] == true) {
-                    $transaction->processed = true;
-                    $transaction->save();
-                }
-            }
-        } else {
-            $transaction->processed = true;
-            $transaction->save();
-        }
+        $this->sendTransaction($transaction);
 
         return response()->json([
             "message" => "success"
@@ -216,6 +178,7 @@ class TransactionController extends Controller
                 "BillRefNumber" => $data['accountNumber'],
             ]);
 
+            $this->sendTransaction($transaction);
             dd($transaction);
         }
     }
@@ -223,39 +186,46 @@ class TransactionController extends Controller
     public function complete_failed_transactions()
     {
         foreach (Transaction::where("processed", false)->get() as $transaction) {
-            $accountNumber = preg_replace('/\s+/', '', $transaction->BillRefNumber); //remove white space
-            $accountNumberArray = explode('-', $accountNumber);
-            $code = strtolower($accountNumberArray[0]);
-            $app = App::where("code", $code)->first();
-            if (!$app) {
-                $accountNumberArray = explode('_', $accountNumber);
-                $code = strtolower($accountNumberArray[0]);
-                $app = App::where("code", $code)->first();
-            }
-            if ($app) {
-                $tokenResponse = Http::retry(3, 100)->post($app->login_endpoint, [
-                    'username' => $app->username,
-                    'password' => $app->password,
-                ])->json();
-                if ($tokenResponse) {
-                    $token = $tokenResponse['access_token'];
-                    $headers = [
-                        'Authorization' => 'Bearer ' . $token,
-                        'Content-Type' => 'application/json',
-                        'Accept' => 'application/json',
-                    ];
-                    $response = Http::retry(3, 100)->withHeaders($headers)->post($app->endpoint, json_decode(json_encode($transaction), true))->json();
-
-                    if ($response["success"] == true) {
-                        $transaction->processed = true;
-                        $transaction->save();
-                    }
-                }
-            } else {
-                $transaction->processed = true;
-                $transaction->save();
+            $this->sendTransaction($transaction);
+        }
+    }
+    public function sendTransaction($transaction){
+        $accountNumber = preg_replace('/\s+/', '', $transaction->BillRefNumber); //remove white space
+        $delimeters = ["#", "-", "_"];
+        $selectedDelimeter = "#";
+        foreach($delimeters as $delimeter){
+            if (strpos($accountNumber, $delimeter) !== false) {
+                $selectedDelimeter = $delimeter;
             }
         }
+        $accountNumberArray = explode($selectedDelimeter, $accountNumber);
+        $code = strtolower($accountNumberArray[0]);
+        $app = App::where("code", $code)->first();
+
+        if ($app) {
+            $transaction->app_id = $app->id;
+            $tokenResponse = Http::retry(3, 100)->post($app->login_endpoint, [
+                'username' => $app->username,
+                'password' => $app->password,
+            ])->json();
+            if ($tokenResponse) {
+                $token = $tokenResponse['access_token'];
+                $headers = [
+                    'Authorization' => 'Bearer ' . $token,
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                ];
+                $response = Http::retry(3, 100)->withHeaders($headers)->post($app->endpoint, json_decode(json_encode($transaction), true))->json();
+
+                if ($response["success"] == true) {
+                    $transaction->processed = true;
+                    $transaction->save();
+                }
+            }
+        } else {
+            $transaction->processed = true;
+        }
+        $transaction->save();
     }
     public function c2b_validation(Request $request)
     {
