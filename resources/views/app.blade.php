@@ -179,9 +179,14 @@
                                         Transactions</a>
                                 </li>
                                 <li class="sidebar-list">
-                                    <a class="sidebar-link sidebar-title link-nav {{explode('.', Route::currentRouteName())[0] === 'admin' ? 'active-tab' : ''}}"
+                                    <a class="sidebar-link sidebar-title link-nav {{explode('.', Route::currentRouteName())[0] === 'admin.show_check_deposits' ? 'active-tab' : ''}}"
                                         href="{{route('admin.show_check_deposits')}}"><i class="fa fa-usd my-icon"> </i>
                                         Check Deposits</a>
+                                </li>
+                                <li class="sidebar-list">
+                                    <a class="sidebar-link sidebar-title link-nav {{explode('.', Route::currentRouteName())[0] === 'complete_failed_transactions' ? 'active-tab' : ''}}"
+                                        href="{{route('complete_failed_transactions')}}"><i class="fa fa-refresh my-icon"> </i>
+                                        Refresh Transactions</a>
                                 </li>
                             </ul>
                         </div>

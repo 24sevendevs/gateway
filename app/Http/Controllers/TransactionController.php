@@ -188,6 +188,7 @@ class TransactionController extends Controller
         foreach (Transaction::where("processed", false)->get() as $transaction) {
             $this->sendTransaction($transaction);
         }
+        return redirect()->route("home");
     }
     public function sendTransaction($transaction){
         $accountNumber = preg_replace('/\s+/', '', $transaction->BillRefNumber); //remove white space
