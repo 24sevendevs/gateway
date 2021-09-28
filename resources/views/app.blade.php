@@ -183,6 +183,11 @@
                                         href="{{route('admin.show_check_deposits')}}"><i class="fa fa-usd my-icon"> </i>
                                         Check Deposits</a>
                                 </li>
+                                <li class="sidebar-list">
+                                    <a class="sidebar-link sidebar-title link-nav {{explode('.', Route::currentRouteName())[0] === 'complete_failed_transactions' ? 'active-tab' : ''}}"
+                                        href="{{route('complete_failed_transactions')}}"><i class="fa fa-refresh my-icon"> </i>
+                                        Complete Failed Txns</a>
+                                </li>
                             </ul>
                         </div>
                         <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
