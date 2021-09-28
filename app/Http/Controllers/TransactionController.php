@@ -41,11 +41,6 @@ class TransactionController extends Controller
         $data = $request->all();
         $data = json_encode($data);
         $data = json_decode($data);
-<<<<<<< HEAD
-        
-=======
-
->>>>>>> 8e618d95a7992a791e5a98ea9996e97dd71382f8
         $transaction = Transaction::create([
             "TransID" => $data->TransID,
             "MSISDN" => $data->MSISDN, //phone
@@ -192,10 +187,7 @@ class TransactionController extends Controller
         foreach (Transaction::where("processed", false)->get() as $transaction) {
             $this->sendTransaction($transaction);
         }
-<<<<<<< HEAD
-=======
         return redirect()->route("home");
->>>>>>> 8e618d95a7992a791e5a98ea9996e97dd71382f8
     }
     public function sendTransaction($transaction){
         $accountNumber = preg_replace('/\s+/', '', $transaction->BillRefNumber); //remove white space
@@ -209,24 +201,6 @@ class TransactionController extends Controller
         $accountNumberArray = explode($selectedDelimeter, $accountNumber);
         $code = strtolower($accountNumberArray[0]);
         $app = App::where("code", $code)->first();
-<<<<<<< HEAD
-        
-        if ($app) {
-            $transaction->app_id = $app->id;
-            $tokenResponse = Http::retry(3, 100)->post($app->login_endpoint, [
-                'username' => $app->username,
-                'password' => $app->password,
-            ])->json();
-            if ($tokenResponse) {
-                $token = $tokenResponse['access_token'];
-                $headers = [
-                    'Authorization' => 'Bearer ' . $token,
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json',
-                ];
-                $response = Http::retry(3, 100)->withHeaders($headers)->post($app->endpoint, json_decode(json_encode($transaction), true))->json();
-
-=======
 
         if ($app) {
             $transaction->app_id = $app->id;
@@ -243,7 +217,6 @@ class TransactionController extends Controller
                 ];
                 $response = Http::retry(3, 100)->withHeaders($headers)->post($app->endpoint, json_decode(json_encode($transaction), true))->json();
 
->>>>>>> 8e618d95a7992a791e5a98ea9996e97dd71382f8
                 if ($response["success"] == true) {
                     $transaction->processed = true;
                     $transaction->save();
