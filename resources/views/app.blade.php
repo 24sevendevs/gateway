@@ -10,7 +10,7 @@
 
     <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
-    <title>Payment Gateway - 24Seven Developers</title>
+    <title>Payment Gateway - Writers Admin</title>
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap"
         rel="stylesheet">
@@ -149,7 +149,7 @@
                                 <li class="sidebar-main-title">
                                     <div>
                                         <h6 id="greeting">Navigation</h6>
-                                        <p>24Seven Gateway</p>
+                                        <p>Writers Admin Gateway</p>
                                     </div>
                                 </li>
                                 <style>
@@ -203,7 +203,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12 footer-copyright text-center">
-                        <p class="mb-0">Copyright 2021 © 24Seven Developers Payment Gateway</p>
+                        <p class="mb-0">Copyright 2021 © Writers Admin Payment Gateway</p>
                     </div>
                 </div>
             </div>
