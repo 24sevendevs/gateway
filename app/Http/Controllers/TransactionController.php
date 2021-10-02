@@ -217,7 +217,7 @@ class TransactionController extends Controller
 
         if ($app) {
             $transaction->app_id = $app->id;
-            $tokenResponse = Http::retry(3, 1000)->post($app->login_endpoint, [
+            $tokenResponse = Http::post($app->login_endpoint, [
                 'username' => $app->username,
                 'password' => $app->password,
             ])->json();
@@ -228,7 +228,7 @@ class TransactionController extends Controller
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
                 ];
-                $response = Http::retry(3, 1000)->withHeaders($headers)->post($app->endpoint, json_decode(json_encode($transaction), true))->json();
+                $response = Http::withHeaders($headers)->post($app->endpoint, json_decode(json_encode($transaction), true))->json();
 
                 if ($response["success"] == true) {
                     $transaction->processed = true;
