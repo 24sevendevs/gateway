@@ -197,6 +197,7 @@ class TransactionController extends Controller
     {
         foreach (Transaction::where("processed", false)->get() as $transaction) {
             $this->sendTransaction($transaction);
+            sleep(5);
         }
         return redirect()->route("home");
     }
