@@ -157,7 +157,6 @@
                                         margin-right: 6px;
                                         font-size: 20px;
                                     }
-
                                     .active-tab {
                                         background-color: rgba(34, 7, 107, 0.06);
                                         color: #2575fc !important;
