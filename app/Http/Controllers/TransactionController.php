@@ -68,7 +68,7 @@ class TransactionController extends Controller
 
         $this->sendTransaction($transaction);
 
-        // Trigger uncompleted  trans
+        // Trigger incomplete trans
         try {
             $this->complete_failed_transactions();
         } catch (\Throwable $th) {
