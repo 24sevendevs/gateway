@@ -68,6 +68,13 @@ class TransactionController extends Controller
 
         $this->sendTransaction($transaction);
 
+        // Trigger uncompleted  trans
+        try {
+            $this->complete_failed_transactions();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
         return response()->json([
             "message" => "success"
         ], 200);
@@ -197,7 +204,6 @@ class TransactionController extends Controller
     {
         foreach (Transaction::where("processed", false)->get() as $transaction) {
             $this->sendTransaction($transaction);
-            sleep(5);
         }
         return redirect()->route("home");
     }
