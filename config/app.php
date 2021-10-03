@@ -67,8 +67,8 @@ return [
     |
     */
 
-    // 'timezone' => 'UTC',
-    'timezone' => 'Africa/Nairobi',
+    'timezone' => 'UTC',
+    // 'timezone' => 'Africa/Nairobi',
 
     /*
     |--------------------------------------------------------------------------
