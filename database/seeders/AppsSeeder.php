@@ -20,7 +20,7 @@ class AppsSeeder extends Seeder
                 "code" => "we",
                 // "endpoint" => "https://employer-test.writersadmin.com/api/payments/handle-c2b-gateway-result",
                 // "login_endpoint" => "https://employer-test.writersadmin.com/api/bots/login",
-                "endpoint" => "https://employer.writersadmin.com/api/payments/handle-c2b-gateway-result",
+                "endpoint" => "https://employer.writersadmin.com/api/bots/payments/handle-c2b-gateway-result",
                 "login_endpoint" => "https://employer.writersadmin.com/api/bots/login",
                 "username" => "writers_bot",
                 "password" => "pM9CMPfrF5Z9oh7vDwjMlKqD",
@@ -29,7 +29,7 @@ class AppsSeeder extends Seeder
             [
                 "name" => "Writers Admin Writers",
                 "code" => "ww",
-                "endpoint" => "https://employer.writersadmin.com/api/payments/handle-c2b-gateway-result",
+                "endpoint" => "https://employer.writersadmin.com/api/bots/payments/handle-c2b-gateway-result",
                 "login_endpoint" => "https://employer.writersadmin.com/api/bots/login",
                 "username" => "writers_bot",
                 "password" => "pM9CMPfrF5Z9oh7vDwjMlKqD",
