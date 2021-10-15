@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
     });
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/complete-failed-transactions', [App\Http\Controllers\TransactionController::class, 'complete_failed_transactions'])->name('complete_failed_transactions');
+    Route::get('/register-urls', [App\Http\Controllers\TransactionController::class, 'register_c2b_urls'])->name('register_c2b_urls');
     Route::resource('apps', AppController::class);
     Route::resource('transactions', TransactionController::class);
 

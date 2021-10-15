@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f92dca6b0b8ca69708e45a35a49e4caf",
+    "content-hash": "c0b34e29e706c7654eb23127b0d13600",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5093,6 +5093,53 @@
                 }
             ],
             "time": "2021-07-27T01:56:02+00:00"
+        },
+        {
+            "name": "tfs/mpesa",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/24sevendevs/mpesa.git",
+                "reference": "570cd15caf5ad1282e45f37fac15c009b3b73db8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/24sevendevs/mpesa/zipball/570cd15caf5ad1282e45f37fac15c009b3b73db8",
+                "reference": "570cd15caf5ad1282e45f37fac15c009b3b73db8",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "TFS\\Mpesa\\MpesaServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TFS\\Mpesa\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kelvin Maina",
+                    "email": "thiongokelvin5@gmail.com"
+                },
+                {
+                    "name": "George Njoroge",
+                    "email": "georgenjoroge977@gmail.com"
+                }
+            ],
+            "description": "This package will enable you to consume Safaricom Mpesa Daraja API in your Laravel project",
+            "support": {
+                "source": "https://github.com/24sevendevs/mpesa/tree/v2.0.0"
+            },
+            "time": "2021-09-05T22:18:22+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",

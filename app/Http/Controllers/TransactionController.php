@@ -7,6 +7,7 @@ use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use TFS\Mpesa\Mpesa;
 
 class TransactionController extends Controller
 {
@@ -23,6 +24,16 @@ class TransactionController extends Controller
     public function showCheckDeposit()
     {
         return view("check_deposits");
+    }
+    public function register_c2b_urls()
+    {
+        $ValidationURL = "https://gateway.writersadmin.com/api/payments/c2b-validation";
+        $ConfirmationURL = "https://gateway.writersadmin.com/api/payments/c2b-confirmation";
+        $ResponseType = "Completed";
+        $ShortCode = config("mpesa." . config('mpesa.mode') . ".shortcode");
+
+        $result = Mpesa::c2b_register_url($ValidationURL, $ConfirmationURL, $ResponseType, $ShortCode);
+        dd($result);
     }
     public function c2b_confirmation(Request $request)
     {
@@ -56,6 +67,13 @@ class TransactionController extends Controller
         ]);
 
         $this->sendTransaction($transaction);
+
+        // Trigger incomplete trans
+        try {
+            $this->complete_failed_transactions();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
 
         return response()->json([
             "message" => "success"
@@ -189,11 +207,12 @@ class TransactionController extends Controller
         }
         return redirect()->route("home");
     }
-    public function sendTransaction($transaction){
+    public function sendTransaction($transaction)
+    {
         $accountNumber = preg_replace('/\s+/', '', $transaction->BillRefNumber); //remove white space
         $delimeters = ["#", "-", "_"];
         $selectedDelimeter = "#";
-        foreach($delimeters as $delimeter){
+        foreach ($delimeters as $delimeter) {
             if (strpos($accountNumber, $delimeter) !== false) {
                 $selectedDelimeter = $delimeter;
             }
