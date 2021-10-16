@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\TransactionController;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +22,9 @@ Auth::routes();
 
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
+        foreach (Transaction::whereNull("app_id")->get() as $trans) {
+            dd($trans);
+        }
         return redirect()->route("home");
     });
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
