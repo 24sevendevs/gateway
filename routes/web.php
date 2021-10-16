@@ -41,7 +41,7 @@ Route::middleware('auth')->group(function () {
                 print("Account no: $transaction->BillRefNumber, Amount: $transaction->TransAmount <br>");
             }
         }
-        dd("done");
+        dd($amount);
         return redirect()->route("home");
     });
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
