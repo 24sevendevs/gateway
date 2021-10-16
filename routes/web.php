@@ -22,9 +22,23 @@ Auth::routes();
 
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
-        foreach (Transaction::whereNull("app_id")->get() as $trans) {
-            dd($trans);
+        foreach (Transaction::whereNull("app_id")->get() as $transaction) {
+            $accountNumber = preg_replace('/\s+/', '', $transaction->BillRefNumber); //remove white space
+            $delimeters = ["#", "-", "_"];
+            $selectedDelimeter = "#";
+            foreach ($delimeters as $delimeter) {
+                if (strpos($accountNumber, $delimeter) !== false) {
+                    $selectedDelimeter = $delimeter;
+                }
+            }
+            $accountNumberArray = explode($selectedDelimeter, $accountNumber);
+            $code = strtolower($accountNumberArray[0]);
+
+            if ($code != "xww" &&  $code != "xwe" && strtolower($accountNumber) != "schemes") {
+                print($transaction->amount . "<br>");
+            }
         }
+        dd("done");
         return redirect()->route("home");
     });
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
