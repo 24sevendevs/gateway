@@ -22,6 +22,7 @@ Auth::routes();
 
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
+        $amount = 0;
         foreach (Transaction::whereNull("app_id")->get() as $transaction) {
             $accountNumber = preg_replace('/\s+/', '', $transaction->BillRefNumber); //remove white space
             $delimeters = ["#", "-", "_"];
@@ -33,9 +34,11 @@ Route::middleware('auth')->group(function () {
             }
             $accountNumberArray = explode($selectedDelimeter, $accountNumber);
             $code = strtolower($accountNumberArray[0]);
-
+            $n = 0;
             if ($code != "xww" &&  $code != "xwe" && strtolower($accountNumber) != "schemes") {
-                print($transaction->TransAmount . " <br>");
+                $amount += $transaction->TransAmount;
+                $n++;
+                print("Account no: $transaction->BillRefNumber, Amount: $transaction->TransAmount <br>");
             }
         }
         dd("done");
