@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
             $code = strtolower($accountNumberArray[0]);
 
             if ($code != "xww" &&  $code != "xwe" && strtolower($accountNumber) != "schemes") {
-                print($transaction->amount . " 1, ");
+                print($transaction->TransAmount . " <br>");
             }
         }
         dd("done");
