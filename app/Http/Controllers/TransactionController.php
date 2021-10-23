@@ -107,7 +107,8 @@ class TransactionController extends Controller
         // Get data from csv
         $row = 1;
         $dataArr = $receipts = [];
-        $total = $verifiedCount = 0;
+        $total = 0;
+        $verifiedCount = 0;
         if ($request->hasFile('file')) {
             if (!file_exists('employer/uploads')) {
                 mkdir('employer/uploads', 0777, true);
@@ -135,28 +136,28 @@ class TransactionController extends Controller
 
 
                 if ($row > 6 && $data[12] != "Schemes" && $data[12] != "") {
-
                     // added
                     if (Transaction::where("TransID", $data[0])->count() > 0) {
                         continue;
                     }
 
+
                     $accountNumber = preg_replace('/\s+/', '', $data[12]); //remove white space
-                    $accountNumberArray = explode('-', $accountNumber);
+                    $delimeters = ["#", "-", "_"];
+                    $selectedDelimeter = "#";
+                    foreach ($delimeters as $delimeter) {
+                        if (strpos($accountNumber, $delimeter) !== false) {
+                            $selectedDelimeter = $delimeter;
+                        }
+                    }
+                    $accountNumberArray = explode($selectedDelimeter, $accountNumber);
                     $code = strtolower($accountNumberArray[0]);
                     $app = App::where("code", $code)->first();
+
                     $app_id = null;
-                    if (!$app) {
-                        $accountNumberArray = explode('_', $accountNumber);
-                        $code = strtolower($accountNumberArray[0]);
-                        $app = App::where("code", $code)->first();
-                        if ($app) {
-                            $app_id = $app->id;
-                        }
-                    } else {
+                    if ($app) {
                         $app_id = $app->id;
                     }
-
                     if (!$app) {
                         continue;
                     }
