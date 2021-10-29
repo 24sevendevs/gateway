@@ -22,6 +22,7 @@ Auth::routes();
 
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
+        return redirect()->route("home");
         $amount = 0;
         foreach (Transaction::whereNull("app_id")->get() as $transaction) {
             $accountNumber = preg_replace('/\s+/', '', $transaction->BillRefNumber); //remove white space
@@ -42,7 +43,6 @@ Route::middleware('auth')->group(function () {
             }
         }
         dd($amount);
-        return redirect()->route("home");
     });
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/complete-failed-transactions', [App\Http\Controllers\TransactionController::class, 'complete_failed_transactions'])->name('complete_failed_transactions');
