@@ -23,8 +23,8 @@ Auth::routes();
 
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
-        $result = Mpesa::mpesa_express("254723077827", 10, "Kelvo", "Test");
-        dd($result);
+        // $result = Mpesa::mpesa_express("254723077827", 10, "Kelvo", "Test");
+        // dd($result);
         return redirect()->route("home");
         $amount = 0;
         foreach (Transaction::whereNull("app_id")->get() as $transaction) {
