@@ -3,6 +3,7 @@
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
+use TFS\Mpesa\Mpesa;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,8 @@ Auth::routes();
 
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
+        $result = Mpesa::mpesa_express("254723077827", 10, "Kelvo", "Test");
+        dd($result);
         return redirect()->route("home");
     });
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
