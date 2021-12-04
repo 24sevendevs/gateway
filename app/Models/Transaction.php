@@ -9,6 +9,7 @@ class Transaction extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $table = "gateway_transactions";
 
 
     public function app(){
