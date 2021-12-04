@@ -4,6 +4,7 @@ use App\Http\Controllers\AppController;
 use App\Http\Controllers\TransactionController;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Route;
+use TFS\Mpesa\Mpesa;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,8 @@ Auth::routes();
 
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
+        // $result = Mpesa::mpesa_express("254723077827", 10, "Kelvo", "Test");
+        // dd($result);
         return redirect()->route("home");
         $amount = 0;
         foreach (Transaction::whereNull("app_id")->get() as $transaction) {
